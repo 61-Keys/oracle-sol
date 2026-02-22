@@ -1,4 +1,4 @@
-@@ -1,147 +1,74 @@
+
 <p align="center">
   <img src="assets/banner.svg" alt="ORACLE-Sol" width="100%"/>
 </p>
