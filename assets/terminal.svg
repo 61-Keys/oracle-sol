@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="520" viewBox="0 0 750 520">
+  <defs>
+    <linearGradient id="tbg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1b1e"/>
+      <stop offset="100%" style="stop-color:#111113"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Terminal window -->
+  <rect width="750" height="520" rx="12" fill="url(#tbg)" stroke="#2a2a2a" stroke-width="1"/>
+  
+  <!-- Title bar -->
+  <rect width="750" height="36" rx="12" fill="#1e1f22"/>
+  <rect y="24" width="750" height="12" fill="#1e1f22"/>
+  <circle cx="20" cy="18" r="6" fill="#ff5f57"/>
+  <circle cx="40" cy="18" r="6" fill="#ffbd2e"/>
+  <circle cx="60" cy="18" r="6" fill="#28ca42"/>
+  <text x="375" y="22" font-family="'SF Mono', monospace" font-size="12" fill="#666" text-anchor="middle">oracle predict GFP_sequence --compare</text>
+  
+  <!-- Terminal content -->
+  <g transform="translate(24, 52)" font-family="'SF Mono', 'Fira Code', 'Consolas', monospace" font-size="12.5">
+    
+    <!-- Banner -->
+    <text y="10" fill="#007a63">   ________  ___   ______   ____        _____      __</text>
+    <text y="26" fill="#00d4aa">  / __ / _ \/  _ | / ___/  / __/ ___   / ___/___  / /</text>
+    <text y="42" fill="#00d4aa"> / /_// , _/ __ |/ /__   / _/  /___/ _\__ \/  _ \/ /</text>
+    <text y="58" fill="#5fffdf">  \____/_/|_/_/ |_|\___/  /___/       /____/\___/_/</text>
+    
+    <text y="82" fill="#666">  Protein Solubility Prediction</text>
+    <text y="82" x="235" fill="#333">|</text>
+    <text y="82" x="245" fill="#007a63">ESM2-650M + MLP</text>
+    <text y="82" x="400" fill="#333">|</text>
+    <text y="82" x="410" fill="#666">v0.6.0</text>
+    
+    <!-- Separator -->
+    <text y="102" fill="#007a63">  ━━━━━</text><text y="102" x="56" fill="#333">━━━━━</text><text y="102" x="106" fill="#007a63">━━━━━</text><text y="102" x="156" fill="#333">━━━━━</text><text y="102" x="206" fill="#007a63">━━━━━</text><text y="102" x="256" fill="#333">━━━━━</text>
+    
+    <!-- Status -->
+    <text y="126" fill="#666">  &#x2022; Loaded 1 sequence</text>
+    <text y="142" fill="#666">  &#x2022; Device: mps</text>
+    <text y="158" fill="#666">  &#x2022; Loading ESM2-650M...</text>
+    
+    <!-- Result -->
+    <text y="186" fill="#00d4aa">  &#x25C6; </text><text y="186" x="30" fill="#e0e0e0" font-weight="bold">GFP_avictoria</text>
+    
+    <text y="210" fill="#00d4aa" font-weight="bold" font-size="16">    72.4 %    SOLUBLE</text>
+    
+    <!-- Score bar -->
+    <text y="234" fill="#ff5555" opacity="0.5" font-size="11">    INSOL </text>
+    <text y="234" x="75" fill="#ff5555">&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;</text>
+    <text y="234" x="165" fill="#ffaa00">&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;</text>
+    <text y="234" x="225" fill="#00d4aa">&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;</text>
+    <text y="234" x="291" fill="white" font-weight="bold">&#x25C6;</text>
+    <text y="234" x="299" fill="#333">&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;&#x2591;</text>
+    <text y="234" x="384" fill="#00d4aa" opacity="0.5" font-size="11"> SOL</text>
+    
+    <!-- Metrics -->
+    <text y="258" fill="#666">    Length  </text><text y="258" x="100" fill="#e0e0e0">238</text>
+    <text y="258" x="130" fill="#333">  &#x2502;  </text>
+    <text y="258" x="158" fill="#666">Score  </text><text y="258" x="205" fill="#00d4aa" font-weight="bold">72.4%</text>
+    <text y="258" x="248" fill="#333">  &#x2502;  </text>
+    <text y="258" x="276" fill="#666">Verdict  </text><text y="258" x="333" fill="#00d4aa" font-weight="bold">SOLUBLE</text>
+    <text y="258" x="396" fill="#333">  &#x2502;  </text>
+    <text y="258" x="424" fill="#666">Confidence  </text><text y="258" x="503" fill="#00d4aa" font-weight="bold">HIGH</text>
+    
+    <!-- Separator -->
+    <text y="282" fill="#007a63">  ━━━━━</text><text y="282" x="56" fill="#333">━━━━━</text><text y="282" x="106" fill="#007a63">━━━━━</text><text y="282" x="156" fill="#333">━━━━━</text>
+    
+    <!-- Comparison header -->
+    <text y="310" fill="#00d4aa" font-weight="bold">  REFERENCE COMPARISON</text>
+    <text y="328" fill="#666">  Your protein vs known E. coli expression benchmarks.</text>
+    
+    <!-- Comparison table -->
+    <text y="356" fill="#666" font-size="11">        Protein          Length    Score     Label</text>
+    <text y="374" fill="#666"> REF  </text><text y="374" x="48" fill="#666">MBP                     214</text><text y="374" x="285" fill="#00d4aa" font-weight="bold">78.3%</text><text y="374" x="340" fill="#00d4aa">SOLUBLE</text>
+    <text y="390" fill="#666"> REF  </text><text y="390" x="48" fill="#666">Thioredoxin             108</text><text y="390" x="285" fill="#00d4aa" font-weight="bold">75.1%</text><text y="390" x="340" fill="#00d4aa">SOLUBLE</text>
+    <text y="406" fill="#00d4aa" font-weight="bold">  &#x2192;  </text><text y="406" x="48" fill="#00d4aa" font-weight="bold">GFP_avictoria           238</text><text y="406" x="285" fill="#00d4aa" font-weight="bold">72.4%</text><text y="406" x="340" fill="#00d4aa">SOLUBLE</text>
+    <text y="422" fill="#666"> REF  </text><text y="422" x="48" fill="#666">SUMO1                    99</text><text y="422" x="285" fill="#00d4aa" font-weight="bold">68.2%</text><text y="422" x="340" fill="#00d4aa">SOLUBLE</text>
+    <text y="438" fill="#666"> REF  </text><text y="438" x="48" fill="#666">Insulin                 110</text><text y="438" x="285" fill="#ff5555" font-weight="bold">38.7%</text><text y="438" x="340" fill="#ff5555">INSOL</text>
+    <text y="454" fill="#666"> REF  </text><text y="454" x="48" fill="#666">Amyloid-beta 42          42</text><text y="454" x="285" fill="#ff5555" font-weight="bold">12.1%</text><text y="454" x="340" fill="#ff5555">INSOL</text>
+    
+  </g>
+</svg>

@@ -131,17 +131,42 @@ class OraclePredictor:
         self._esm_model.to(self._device)
         logger.info("ESM2-650M loaded.")
 
+    def _find_weights(self) -> Optional[Path]:
+        """Search for MLP weights in standard locations."""
+        if self._weights_path and Path(self._weights_path).exists():
+            return Path(self._weights_path)
+
+        # 1. Bundled with package (pip install)
+        pkg_weights = Path(__file__).parent.parent / "weights" / "mlp_head.pt"
+        if pkg_weights.exists():
+            return pkg_weights
+
+        # 2. Project root (git clone)
+        for p in [Path("weights/mlp_head.pt"), Path("mlp_head.pt")]:
+            if p.exists():
+                return p
+
+        # 3. User home cache
+        cache = Path.home() / ".oracle-sol" / "mlp_head.pt"
+        if cache.exists():
+            return cache
+
+        return None
+
     def _load_mlp(self) -> None:
         self._mlp = SolubilityMLP(input_dim=1280)
 
-        if self._weights_path and self._weights_path.exists():
-            state = torch.load(self._weights_path, map_location=self._device, weights_only=True)
+        weights_path = self._find_weights()
+        if weights_path:
+            state = torch.load(weights_path, map_location=self._device, weights_only=True)
             self._mlp.load_state_dict(state)
-            logger.info("MLP weights loaded from %s", self._weights_path)
+            self._weights_source = str(weights_path)
+            logger.info("MLP weights loaded from %s", weights_path)
         else:
+            self._weights_source = "none (untrained)"
             logger.warning(
                 "No MLP weights found — using untrained head. "
-                "Download weights or train with `oracle train`."
+                "Place mlp_head.pt in weights/ or ~/.oracle-sol/"
             )
 
         self._mlp.eval()

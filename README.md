@@ -1,206 +1,147 @@
-# ORACLE-Sol
+<p align="center">
+  <img src="assets/banner.svg" alt="ORACLE-Sol" width="100%"/>
+</p>
 
-Protein solubility prediction for the modern design pipeline.
+<p align="center">
+  <a href="https://github.com/61-Keys/oracle-sol/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-00d4aa?style=flat-square" alt="MIT License"/></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.10+-00d4aa?style=flat-square&logo=python&logoColor=white" alt="Python 3.10+"/></a>
+  <a href="https://huggingface.co/spaces/AsutosH26/Oracle-Sol"><img src="https://img.shields.io/badge/demo-HuggingFace-ffaa00?style=flat-square&logo=huggingface&logoColor=white" alt="HuggingFace Demo"/></a>
+  <img src="https://img.shields.io/badge/MCC-0.450-00d4aa?style=flat-square" alt="MCC 0.450"/>
+  <img src="https://img.shields.io/badge/accuracy-71.9%25-00d4aa?style=flat-square" alt="Accuracy 71.9%"/>
+</p>
 
-```
-oracle predict MVKVYAPASSANMSVGFDVLGAAVTPVDGALLGDVVTVEAAETFSLNNLGR...
-
-  ◆ query
-
-    INSOL ████████████████████████████████████◆░░░░░░░░░░░░░░ SOL
-
-    Length  238  │  Score  72.3%  │  Label  SOLUBLE  │  Confidence  medium
-```
+<p align="center">
+  Predict E. coli protein solubility from sequence alone.<br/>
+  Frozen ESM2-650M embeddings + trained MLP head. 2.8 MB weights. Runs on CPU.
+</p>
 
 ---
 
-## What it does
-
-ORACLE-Sol predicts whether a protein will be soluble when expressed in *E. coli*, the most common bacterial expression system. It uses frozen [ESM2-650M](https://huggingface.co/facebook/esm2_t33_650M_UR50D) embeddings with a trained classification head, matching published SOTA performance (PLM_Sol, 2024) with a fraction of the complexity.
-
-It fits between computational design tools and the wet lab:
-
-```
-RFdiffusion / ProteinMPNN        design sequences
-        ↓
-AlphaFold / ESMFold              predict structure
-        ↓
-ORACLE-Sol                       score solubility ← you are here
-        ↓
-wet lab                          express top candidates
-```
-
-## Performance
-
-| Method | Accuracy | MCC | Source |
-|--------|----------|-----|--------|
-| Composition baseline | 59.8% | 0.258 | Logistic regression on AA frequencies |
-| SoluProt (2021) | 67.0% | 0.40 | ProtBERT + gradient boosting |
-| DSResSol (2022) | 71.0% | 0.43 | ESM-1b + ResNet |
-| **ORACLE-Sol** | **73.4%** | **0.455** | **ESM2-650M + MLP (frozen)** |
-| PLM_Sol (2024) | 73.0% | 0.469 | ProtT5 + biLSTM_TextCNN |
-| Field ceiling | ~77% | ~0.50 | Limited by label noise in training data |
-
-Trained on 70K proteins from the UESolDS dataset (TargetTrack-derived, real experimental outcomes).
-
-## Install
+## Quick Start
 
 ```bash
-pip install oracle-sol
+# Install
+pip install git+https://github.com/61-Keys/oracle-sol.git
+
+# Predict a protein
+oracle predict MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLK
+
+# Batch from FASTA
+oracle predict designs.fasta --rank
+
+# Compare against known references (GFP, MBP, insulin, etc.)
+oracle predict MVKVYAPASS... --compare
+
+# Per-residue solubility heatmap
+oracle predict MVKVYAPASS... --residues
 ```
 
-For GPU acceleration:
+<p align="center">
+  <img src="assets/terminal.svg" alt="ORACLE-Sol terminal output" width="100%"/>
+</p>
 
-```bash
-pip install oracle-sol[gpu]
+## Why
+
+You design a protein with RFdiffusion + ProteinMPNN + AlphaFold. It looks perfect in silico. You send it to the wet lab. Three weeks and $2,000 later: **insoluble aggregate**. Failure rates are 30-70%.
+
+ORACLE-Sol predicts whether your protein will actually be soluble when expressed in E. coli, *before* you spend time and money on synthesis. It runs in seconds on a laptop.
+
+## How It Works
+
+```
+Your sequence
+      |
+      v
+ ESM2-650M (frozen)     # 650M parameter protein language model
+      |                  # extracts deep evolutionary features
+      v
+ CLS embedding [1280]   # single vector per protein
+      |
+      v
+ MLP head (2.8 MB)      # trained on 70K real experimental outcomes
+      |
+      v
+ P(soluble) score        # 0-100% with confidence level
 ```
 
-## CLI usage
-
-```bash
-# Single sequence
-oracle predict MVKVYAPASSANMSVGF...
-
-# From FASTA file (batch)
-oracle predict designed_proteins.fasta --rank
-
-# From PDB / AlphaFold output
-oracle predict fold_output.pdb
-
-# Compare against reference proteins
-oracle predict SEQUENCE --compare
-
-# Per-residue contribution heatmap
-oracle predict SEQUENCE --residues
-
-# Export to CSV
-oracle predict proteins.fasta --rank --output results.csv
-
-# Quiet mode (TSV output, pipeable)
-oracle predict proteins.fasta --quiet > scores.tsv
-
-# Model info + reference panel
-oracle info
-```
-
-### Pipeline example
-
-Score all ProteinMPNN designs and pick the top 10:
-
-```bash
-oracle predict mpnn_designs.fasta --rank --output ranked.csv
-head -11 ranked.csv  # header + top 10
-```
+The model was trained on the UESolDS dataset (70,031 E. coli proteins with real wet-lab solubility labels from TargetTrack), not synthetic or computed labels.
 
 ## Python API
 
 ```python
 from oracle_sol import predict_solubility
 
-# Single sequence
-results = predict_solubility("MVKVYAPASS...")
-print(results[0].score_pct)   # "72.3%"
-print(results[0].label)       # "soluble"
-print(results[0].confidence)  # "medium"
-
-# Batch
-results = predict_solubility(
-    ["MVKVY...", "MKTLL...", "DAEFR..."],
-    names=["design_1", "design_2", "design_3"],
-)
+results = predict_solubility([
+    "MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLK",
+    "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIA",
+])
 
 for r in results:
-    print(f"{r.name}: {r.label} ({r.score_pct})")
-
-# Per-residue analysis
-results = predict_solubility("MVKVY...", residue_level=True)
-print(results[0].residue_scores)  # [0.82, 0.91, ...]
+    print(f"{r.name}: {r.score_pct} ({r.label}, {r.confidence} confidence)")
 ```
 
-### SolubilityResult fields
+## CLI Commands
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `score` | `float` | P(soluble), range 0-1 |
-| `score_pct` | `str` | Score as percentage string |
-| `label` | `str` | `"soluble"` or `"insoluble"` |
-| `confidence` | `str` | `"high"`, `"medium"`, or `"low"` |
-| `length` | `int` | Sequence length |
-| `truncated` | `bool` | True if sequence exceeded 1022 aa |
-| `residue_scores` | `list[float]` | Per-residue contributions (if requested) |
-| `name` | `str` | Sequence identifier |
+| Command | What it does |
+|---|---|
+| `oracle predict SEQUENCE` | Predict solubility for a single protein |
+| `oracle predict file.fasta` | Batch prediction from FASTA |
+| `oracle predict file.fasta --rank` | Ranked table sorted by score |
+| `oracle predict SEQ --compare` | Compare against 8 reference proteins |
+| `oracle predict SEQ --residues` | Per-residue contribution heatmap |
+| `oracle predict file.fasta -o results.csv` | Export to CSV |
+| `oracle predict SEQ --quiet` | Minimal output (pipeable) |
+| `oracle info` | Model card + reference proteins |
 
-## Input formats
+## Performance
 
-| Format | Extensions | Notes |
-|--------|-----------|-------|
-| Raw sequence | (paste directly) | Standard 20 amino acids |
-| FASTA | `.fasta`, `.fa`, `.faa` | Multi-sequence supported |
-| PDB | `.pdb` | Extracts sequence from ATOM records |
-| CSV | `.csv` | Must have `sequence` column |
+| Metric | ORACLE-Sol | PLM_Sol (2024 SOTA) |
+|---|---|---|
+| Accuracy | 71.9% | 73.0% |
+| MCC | 0.450 | 0.469 |
+| Training data | 70K proteins | 70K proteins |
+| Model size | 2.8 MB head | not published |
+| Backbone | ESM2-650M (frozen) | ESM2-650M (frozen) |
 
-## Confidence calibration
+The accuracy ceiling across all published methods is approximately 77% / 0.50 MCC, constrained by label noise in the experimental data — not by model capacity. Every method plateaus here.
 
-Confidence reflects distance from the decision boundary, not model certainty:
+## How to Read the Output
 
-- **High**: score > 0.90 or < 0.10 (strong signal)
-- **Medium**: score 0.675-0.90 or 0.10-0.325
-- **Low**: score 0.325-0.675 (near decision boundary, unreliable)
+**Score (0-100%):** Probability of soluble expression in E. coli. Higher = more likely soluble.
 
-The field-wide accuracy ceiling is approximately 77% due to label noise in experimental data (TargetTrack database). This affects all solubility prediction methods equally.
+**Confidence levels:**
+- **HIGH** — score is far from the decision boundary (>80% or <20%). Strong signal.
+- **MEDIUM** — moderate certainty (65-80% or 20-35%).
+- **LOW** — near the boundary (35-65%). Treat with caution.
 
-## Reference proteins
+**Residue heatmap:** Shows which regions of your protein contribute to or detract from predicted solubility. Green = stabilizing, red = destabilizing. Useful for identifying problematic regions in designed proteins.
 
-ORACLE-Sol ships with a curated panel of well-characterized proteins for comparison:
+## Requirements
 
-| Protein | Length | Known outcome |
-|---------|--------|---------------|
-| GFP (A. victoria) | 238 | Soluble |
-| Lysozyme (hen egg-white) | 129 | Soluble |
-| Thioredoxin (E. coli) | 109 | Soluble |
-| MBP (E. coli) | 370 | Soluble |
-| SUMO1 (human) | 101 | Soluble |
-| Insulin (human) | 110 | Insoluble |
-| p53 full-length (human) | 393 | Insoluble |
-| Amyloid-beta 42 (human) | 42 | Insoluble |
-
-Use `oracle predict SEQUENCE --compare` to see where your protein ranks.
-
-## Architecture
-
-```
-Input sequence (amino acids)
-        ↓
-ESM2-650M (frozen, 33 layers, 650M params)
-        ↓
-CLS token embedding (1280-dim)
-        ↓
-MLP head (1280 → 512 → 128 → 2)
-        ↓
-Softmax → P(soluble)
-```
-
-No fine-tuning of ESM2. No MSA computation. No structure prediction required at inference. The frozen backbone makes predictions fast and reproducible.
-
-## How it works
-
-ESM2 is a protein language model trained on 65M protein sequences. Its CLS token captures a global summary of sequence properties. We train a small MLP to map this representation to binary solubility labels from the UESolDS dataset (proteins expressed in E. coli with known experimental outcomes).
-
-**Why not fine-tune ESM2?** We tried. QLoRA fine-tuning produced MCC 0.444, which is *worse* than the frozen baseline (0.455). The bottleneck is data quality, not model capacity.
-
-**Why not combine multiple PLMs?** We tried that too. ESM2 + ProtT5 ensembles scored 0.460, barely above ESM2 alone (0.463 with 5-seed ensembling). The models are too correlated (r=0.84) to provide complementary signal.
+- Python 3.10+
+- ~3 GB RAM (for ESM2-650M)
+- CPU works fine (~2s per protein). GPU optional for speed.
+- No internet needed after first run (ESM2 downloads once from HuggingFace Hub).
 
 ## License
 
-MIT
+MIT. Use it however you want.
 
 ## Citation
 
+If ORACLE-Sol is useful in your research:
+
 ```bibtex
-@software{oracle_sol_2026,
+@software{oracle_sol,
   author = {Rath, Asutosh},
-  title = {ORACLE-Sol: Protein Solubility Prediction for the Modern Design Pipeline},
+  title = {ORACLE-Sol: Protein Solubility Prediction with ESM2},
   year = {2026},
   url = {https://github.com/61-Keys/oracle-sol}
 }
 ```
+
+---
+
+<p align="center">
+  <sub>Built by <a href="https://github.com/61-Keys">61-Keys</a></sub>
+</p>

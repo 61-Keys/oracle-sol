@@ -34,6 +34,7 @@ from oracle_sol.cli.display import (
     print_result,
     print_status,
     print_success,
+    print_system_status,
     print_warning,
 )
 from oracle_sol.core.predictor import OraclePredictor, SolubilityResult
@@ -207,9 +208,12 @@ def predict(
     predictor = _get_predictor(weights=weights, device=device)
 
     if not quiet:
-        print_status(f"Device: {predictor._device}")
         print_status("Loading ESM2-650M...")
-        console.print()
+    predictor._ensure_loaded()
+
+    if not quiet:
+        weights_source = getattr(predictor, '_weights_source', 'unknown')
+        print_system_status(str(predictor._device), weights_source)
 
     # --- Run predictions ---------------------------------------------------
     all_sequences = list(sequences)

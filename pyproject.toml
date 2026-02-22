@@ -5,14 +5,14 @@ build-backend = "setuptools.backends._legacy:_Backend"
 [project]
 name = "oracle-sol"
 version = "0.6.0"
-description = "Protein solubility prediction for the modern design pipeline"
+description = "Predict E. coli protein solubility from sequence using ESM2-650M"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
 authors = [
-    {name = "Asutosh Rath", email = "asutosh@oracle-sol.dev"},
+    {name = "Asutosh Rath"},
 ]
-keywords = ["protein", "solubility", "bioinformatics", "ESM2", "machine-learning"]
+keywords = ["protein", "solubility", "bioinformatics", "ESM2", "machine-learning", "protein-design"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
@@ -28,25 +28,26 @@ dependencies = [
     "typer[all]>=0.9.0",
     "rich>=13.0.0",
     "numpy>=1.24.0",
-    "pandas>=2.0.0",
-    "biopython>=1.81",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0", "ruff>=0.1.0"]
 gpu = ["accelerate>=0.20.0"]
+all = ["pandas>=2.0.0", "biopython>=1.81"]
 
 [project.scripts]
 oracle = "oracle_sol.cli.app:app"
 
 [project.urls]
 Homepage = "https://github.com/61-Keys/oracle-sol"
-Documentation = "https://github.com/61-Keys/oracle-sol#readme"
 Repository = "https://github.com/61-Keys/oracle-sol"
 Issues = "https://github.com/61-Keys/oracle-sol/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+oracle_sol = ["weights/*.pt"]
 
 [tool.ruff]
 line-length = 100

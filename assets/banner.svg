@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0c"/>
+      <stop offset="100%" style="stop-color:#0f1117"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#007a63"/>
+      <stop offset="50%" style="stop-color:#00d4aa"/>
+      <stop offset="100%" style="stop-color:#5fffdf"/>
+    </linearGradient>
+    <linearGradient id="helix" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4aa;stop-opacity:0.3"/>
+      <stop offset="50%" style="stop-color:#00d4aa;stop-opacity:0.05"/>
+      <stop offset="100%" style="stop-color:#00d4aa;stop-opacity:0.2"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="900" height="300" fill="url(#bg)"/>
+  
+  <!-- Grid pattern -->
+  <g opacity="0.04" stroke="#00d4aa">
+    <line x1="0" y1="60" x2="900" y2="60"/>
+    <line x1="0" y1="120" x2="900" y2="120"/>
+    <line x1="0" y1="180" x2="900" y2="180"/>
+    <line x1="0" y1="240" x2="900" y2="240"/>
+    <line x1="150" y1="0" x2="150" y2="300"/>
+    <line x1="300" y1="0" x2="300" y2="300"/>
+    <line x1="450" y1="0" x2="450" y2="300"/>
+    <line x1="600" y1="0" x2="600" y2="300"/>
+    <line x1="750" y1="0" x2="750" y2="300"/>
+  </g>
+  
+  <!-- DNA helix decoration (right side) -->
+  <g transform="translate(720, 30)" opacity="0.15">
+    <path d="M0,0 Q30,30 0,60 Q-30,90 0,120 Q30,150 0,180 Q-30,210 0,240" 
+          fill="none" stroke="#00d4aa" stroke-width="2"/>
+    <path d="M40,0 Q10,30 40,60 Q70,90 40,120 Q10,150 40,180 Q70,210 40,240" 
+          fill="none" stroke="#00d4aa" stroke-width="2"/>
+    <!-- Rungs -->
+    <line x1="0" y1="30" x2="40" y2="30" stroke="#00d4aa" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="90" x2="40" y2="90" stroke="#00d4aa" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="150" x2="40" y2="150" stroke="#00d4aa" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="210" x2="40" y2="210" stroke="#00d4aa" stroke-width="1.5" opacity="0.5"/>
+  </g>
+  
+  <!-- Protein structure dots (left decoration) -->
+  <g opacity="0.08">
+    <circle cx="50" cy="80" r="3" fill="#00d4aa"/>
+    <circle cx="70" cy="95" r="2" fill="#00d4aa"/>
+    <circle cx="45" cy="110" r="4" fill="#00d4aa"/>
+    <circle cx="65" cy="130" r="2.5" fill="#00d4aa"/>
+    <circle cx="55" cy="155" r="3" fill="#00d4aa"/>
+    <circle cx="75" cy="170" r="2" fill="#00d4aa"/>
+    <circle cx="48" cy="190" r="3.5" fill="#00d4aa"/>
+    <circle cx="68" cy="210" r="2" fill="#00d4aa"/>
+    <line x1="50" y1="80" x2="70" y2="95" stroke="#00d4aa" stroke-width="0.5"/>
+    <line x1="70" y1="95" x2="45" y2="110" stroke="#00d4aa" stroke-width="0.5"/>
+    <line x1="45" y1="110" x2="65" y2="130" stroke="#00d4aa" stroke-width="0.5"/>
+    <line x1="65" y1="130" x2="55" y2="155" stroke="#00d4aa" stroke-width="0.5"/>
+    <line x1="55" y1="155" x2="75" y2="170" stroke="#00d4aa" stroke-width="0.5"/>
+    <line x1="75" y1="170" x2="48" y2="190" stroke="#00d4aa" stroke-width="0.5"/>
+    <line x1="48" y1="190" x2="68" y2="210" stroke="#00d4aa" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Top accent line -->
+  <rect x="120" y="65" width="200" height="2" fill="url(#accent)" rx="1"/>
+  
+  <!-- Main title -->
+  <text x="120" y="128" font-family="'SF Mono', 'Fira Code', 'Consolas', monospace" font-size="52" font-weight="bold" fill="#00d4aa">ORACLE</text>
+  <text x="390" y="128" font-family="'SF Mono', 'Fira Code', 'Consolas', monospace" font-size="52" font-weight="300" fill="#5fffdf">-Sol</text>
+  
+  <!-- Subtitle -->
+  <text x="120" y="165" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" fill="#666666">Protein Solubility Prediction</text>
+  <text x="370" y="165" font-family="'SF Mono', monospace" font-size="14" fill="#333333">|</text>
+  <text x="390" y="165" font-family="'SF Mono', monospace" font-size="14" fill="#007a63">ESM2-650M + MLP</text>
+  
+  <!-- Stats boxes -->
+  <g transform="translate(120, 195)">
+    <rect width="120" height="50" rx="6" fill="#111113" stroke="#222222" stroke-width="1"/>
+    <text x="60" y="22" font-family="'SF Mono', monospace" font-size="11" fill="#666666" text-anchor="middle">ACCURACY</text>
+    <text x="60" y="40" font-family="'SF Mono', monospace" font-size="16" font-weight="bold" fill="#00d4aa" text-anchor="middle">71.9%</text>
+  </g>
+  <g transform="translate(255, 195)">
+    <rect width="120" height="50" rx="6" fill="#111113" stroke="#222222" stroke-width="1"/>
+    <text x="60" y="22" font-family="'SF Mono', monospace" font-size="11" fill="#666666" text-anchor="middle">MCC</text>
+    <text x="60" y="40" font-family="'SF Mono', monospace" font-size="16" font-weight="bold" fill="#00d4aa" text-anchor="middle">0.450</text>
+  </g>
+  <g transform="translate(390, 195)">
+    <rect width="120" height="50" rx="6" fill="#111113" stroke="#222222" stroke-width="1"/>
+    <text x="60" y="22" font-family="'SF Mono', monospace" font-size="11" fill="#666666" text-anchor="middle">TRAINING</text>
+    <text x="60" y="40" font-family="'SF Mono', monospace" font-size="16" font-weight="bold" fill="#e0e0e0" text-anchor="middle">70K proteins</text>
+  </g>
+  <g transform="translate(525, 195)">
+    <rect width="120" height="50" rx="6" fill="#111113" stroke="#222222" stroke-width="1"/>
+    <text x="60" y="22" font-family="'SF Mono', monospace" font-size="11" fill="#666666" text-anchor="middle">WEIGHTS</text>
+    <text x="60" y="40" font-family="'SF Mono', monospace" font-size="16" font-weight="bold" fill="#e0e0e0" text-anchor="middle">2.8 MB</text>
+  </g>
+  
+  <!-- Bottom accent line -->
+  <rect x="120" y="262" width="530" height="1" fill="#222222"/>
+  <rect x="120" y="262" width="200" height="1" fill="url(#accent)" opacity="0.5"/>
+  
+  <!-- Version tag -->
+  <text x="120" y="282" font-family="'SF Mono', monospace" font-size="12" fill="#333333">v0.6.0</text>
+  <text x="180" y="282" font-family="'SF Mono', monospace" font-size="12" fill="#444444">pip install oracle-sol</text>
+</svg>
