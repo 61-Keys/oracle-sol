@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+*.log
+.DS_Store
+
+# Large model files (ESM2 cache etc)
+*.safetensors
+*.bin
+# Keep weights/mlp_head.pt — it's only ~2.6 MB
+# If you add larger weights, use Git LFS
