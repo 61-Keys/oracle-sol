@@ -1,147 +1,74 @@
-<p align="center">
-  <img src="assets/banner.svg" alt="ORACLE-Sol" width="100%"/>
-</p>
-
-<p align="center">
-  <a href="https://github.com/61-Keys/oracle-sol/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-00d4aa?style=flat-square" alt="MIT License"/></a>
-  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.10+-00d4aa?style=flat-square&logo=python&logoColor=white" alt="Python 3.10+"/></a>
-  <a href="https://huggingface.co/spaces/AsutosH26/Oracle-Sol"><img src="https://img.shields.io/badge/demo-HuggingFace-ffaa00?style=flat-square&logo=huggingface&logoColor=white" alt="HuggingFace Demo"/></a>
-  <img src="https://img.shields.io/badge/MCC-0.450-00d4aa?style=flat-square" alt="MCC 0.450"/>
-  <img src="https://img.shields.io/badge/accuracy-71.9%25-00d4aa?style=flat-square" alt="Accuracy 71.9%"/>
-</p>
-
-<p align="center">
-  Predict E. coli protein solubility from sequence alone.<br/>
-  Frozen ESM2-650M embeddings + trained MLP head. 2.8 MB weights. Runs on CPU.
-</p>
-
----
-
-## Quick Start
-
-```bash
-# Install
-pip install git+https://github.com/61-Keys/oracle-sol.git
-
-# Predict a protein
-oracle predict MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLK
-
-# Batch from FASTA
-oracle predict designs.fasta --rank
-
-# Compare against known references (GFP, MBP, insulin, etc.)
-oracle predict MVKVYAPASS... --compare
-
-# Per-residue solubility heatmap
-oracle predict MVKVYAPASS... --residues
-```
-
-<p align="center">
-  <img src="assets/terminal.svg" alt="ORACLE-Sol terminal output" width="100%"/>
-</p>
-
-## Why
-
-You design a protein with RFdiffusion + ProteinMPNN + AlphaFold. It looks perfect in silico. You send it to the wet lab. Three weeks and $2,000 later: **insoluble aggregate**. Failure rates are 30-70%.
-
-ORACLE-Sol predicts whether your protein will actually be soluble when expressed in E. coli, *before* you spend time and money on synthesis. It runs in seconds on a laptop.
-
-## How It Works
-
-```
-Your sequence
-      |
-      v
- ESM2-650M (frozen)     # 650M parameter protein language model
-      |                  # extracts deep evolutionary features
-      v
- CLS embedding [1280]   # single vector per protein
-      |
-      v
- MLP head (2.8 MB)      # trained on 70K real experimental outcomes
-      |
-      v
- P(soluble) score        # 0-100% with confidence level
-```
-
-The model was trained on the UESolDS dataset (70,031 E. coli proteins with real wet-lab solubility labels from TargetTrack), not synthetic or computed labels.
-
-## Python API
-
-```python
-from oracle_sol import predict_solubility
-
-results = predict_solubility([
-    "MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLK",
-    "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIA",
-])
-
-for r in results:
-    print(f"{r.name}: {r.score_pct} ({r.label}, {r.confidence} confidence)")
-```
-
-## CLI Commands
-
-| Command | What it does |
-|---|---|
-| `oracle predict SEQUENCE` | Predict solubility for a single protein |
-| `oracle predict file.fasta` | Batch prediction from FASTA |
-| `oracle predict file.fasta --rank` | Ranked table sorted by score |
-| `oracle predict SEQ --compare` | Compare against 8 reference proteins |
-| `oracle predict SEQ --residues` | Per-residue contribution heatmap |
-| `oracle predict file.fasta -o results.csv` | Export to CSV |
-| `oracle predict SEQ --quiet` | Minimal output (pipeable) |
-| `oracle info` | Model card + reference proteins |
-
-## Performance
-
-| Metric | ORACLE-Sol | PLM_Sol (2024 SOTA) |
-|---|---|---|
-| Accuracy | 71.9% | 73.0% |
-| MCC | 0.450 | 0.469 |
-| Training data | 70K proteins | 70K proteins |
-| Model size | 2.8 MB head | not published |
-| Backbone | ESM2-650M (frozen) | ESM2-650M (frozen) |
-
-The accuracy ceiling across all published methods is approximately 77% / 0.50 MCC, constrained by label noise in the experimental data — not by model capacity. Every method plateaus here.
-
-## How to Read the Output
-
-**Score (0-100%):** Probability of soluble expression in E. coli. Higher = more likely soluble.
-
-**Confidence levels:**
-- **HIGH** — score is far from the decision boundary (>80% or <20%). Strong signal.
-- **MEDIUM** — moderate certainty (65-80% or 20-35%).
-- **LOW** — near the boundary (35-65%). Treat with caution.
-
-**Residue heatmap:** Shows which regions of your protein contribute to or detract from predicted solubility. Green = stabilizing, red = destabilizing. Useful for identifying problematic regions in designed proteins.
-
-## Requirements
-
-- Python 3.10+
-- ~3 GB RAM (for ESM2-650M)
-- CPU works fine (~2s per protein). GPU optional for speed.
-- No internet needed after first run (ESM2 downloads once from HuggingFace Hub).
-
-## License
-
-MIT. Use it however you want.
-
-## Citation
-
-If ORACLE-Sol is useful in your research:
-
-```bibtex
-@software{oracle_sol,
-  author = {Rath, Asutosh},
-  title = {ORACLE-Sol: Protein Solubility Prediction with ESM2},
-  year = {2026},
-  url = {https://github.com/61-Keys/oracle-sol}
-}
-```
-
----
-
-<p align="center">
-  <sub>Built by <a href="https://github.com/61-Keys">61-Keys</a></sub>
-</p>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+  <!-- Background - Pure Black -->
+  <rect width="1200" height="400" fill="#000000"/>
+  
+  <!-- Subtle top accent line -->
+  <rect x="0" y="0" width="1200" height="2" fill="#333333"/>
+  
+  <!-- Left colored accent bar -->
+  <rect x="0" y="0" width="5" height="400" fill="#00d9ff"/>
+  
+  <!-- Main content container -->
+  <g transform="translate(80, 60)">
+    
+    <!-- Header section -->
+    <g>
+      <!-- Main title -->
+      <text x="0" y="72" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; font-size: 72px; font-weight: 700; letter-spacing: -2px;" fill="#ffffff">ORACLE</text>
+      <text x="285" y="72" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; font-size: 72px; font-weight: 700; letter-spacing: -2px;" fill="#00d9ff">Sol</text>
+      
+      <!-- Descriptor with subtle styling -->
+      <text x="0" y="110" style="font-family: 'Courier New', monospace; font-size: 14px; font-weight: 400; letter-spacing: 1px;" fill="#b3b3b3">PROTEIN SOLUBILITY PREDICTION</text>
+      
+      <!-- Tagline -->
+      <text x="0" y="140" style="font-family: 'Courier New', monospace; font-size: 14px; font-weight: 400; letter-spacing: 1px;" fill="#808080">ESM2-650M Embeddings • MLP Architecture</text>
+    </g>
+    
+    <!-- Metrics grid -->
+    <g transform="translate(0, 180)">
+      
+      <!-- Metric 1: Accuracy -->
+      <g>
+        <text x="0" y="0" style="font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;" fill="#808080">Accuracy</text>
+        <text x="0" y="28" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;" fill="#00d9ff">71.9%</text>
+        <line x1="0" y1="38" x2="80" y2="38" stroke="#2a2a2a" stroke-width="1"/>
+      </g>
+      
+      <!-- Metric 2: MCC -->
+      <g transform="translate(160, 0)">
+        <text x="0" y="0" style="font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;" fill="#808080">Matthews CC</text>
+        <text x="0" y="28" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;" fill="#00d9ff">0.450</text>
+        <line x1="0" y1="38" x2="110" y2="38" stroke="#2a2a2a" stroke-width="1"/>
+      </g>
+      
+      <!-- Metric 3: Training Set -->
+      <g transform="translate(380, 0)">
+        <text x="0" y="0" style="font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;" fill="#808080">Training Set</text>
+        <text x="0" y="28" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;" fill="#e5e5e5">70K Proteins</text>
+        <line x1="0" y1="38" x2="155" y2="38" stroke="#2a2a2a" stroke-width="1"/>
+      </g>
+      
+      <!-- Metric 4: Model Size -->
+      <g transform="translate(640, 0)">
+        <text x="0" y="0" style="font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;" fill="#808080">Model Size</text>
+        <text x="0" y="28" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;" fill="#e5e5e5">2.8 MB</text>
+        <line x1="0" y1="38" x2="115" y2="38" stroke="#2a2a2a" stroke-width="1"/>
+      </g>
+      
+    </g>
+    
+    <!-- Divider -->
+    <line x1="0" y1="290" x2="850" y2="290" stroke="#2a2a2a" stroke-width="1"/>
+    
+    <!-- Footer section -->
+    <g transform="translate(0, 310)">
+      <text x="0" y="0" style="font-family: 'Courier New', monospace; font-size: 12px; font-weight: 400; letter-spacing: 0.5px;" fill="#808080">Version 0.6.0</text>
+      <text x="120" y="0" style="font-family: 'Courier New', monospace; font-size: 12px; font-weight: 400; letter-spacing: 0.5px;" fill="#808080">•</text>
+      <text x="140" y="0" style="font-family: 'Courier New', monospace; font-size: 12px; font-weight: 400; letter-spacing: 0.5px;" fill="#00d9ff">pip install oracle-sol</text>
+      <text x="350" y="0" style="font-family: 'Courier New', monospace; font-size: 12px; font-weight: 400; letter-spacing: 0.5px;" fill="#808080">•</text>
+      <text x="370" y="0" style="font-family: 'Courier New', monospace; font-size: 12px; font-weight: 400; letter-spacing: 0.5px;" fill="#00d9ff">github.com/asu/oracle-sol</text>
+    </g>
+    
+  </g>
+  
+</svg>
