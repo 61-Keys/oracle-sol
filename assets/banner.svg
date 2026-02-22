@@ -1,154 +1,124 @@
-<svg width="1200" height="400" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg">
-  <!-- Black Background -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;600;700&display=swap');
+      
+      .title-main {
+        font-family: 'Roboto', sans-serif;
+        font-size: 72px;
+        font-weight: 700;
+        letter-spacing: -2px;
+        line-height: 1;
+      }
+      
+      .title-accent {
+        font-family: 'Roboto', sans-serif;
+        font-size: 72px;
+        font-weight: 700;
+        letter-spacing: -2px;
+      }
+      
+      .descriptor {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 1px;
+      }
+      
+      .metric-label {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+      
+      .metric-value {
+        font-family: 'Roboto', sans-serif;
+        font-size: 28px;
+        font-weight: 500;
+        letter-spacing: -0.5px;
+      }
+      
+      .footer-text {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+      }
+    </style>
+  </defs>
+  
+  <!-- Background - Pure Black -->
   <rect width="1200" height="400" fill="#000000"/>
   
-  <!-- Molecule 1 - Top Left -->
-  <g opacity="0.2" transform="translate(40, 40)">
-    <circle cx="20" cy="20" r="8" fill="#3B82F6"/>
-    <circle cx="50" cy="20" r="8" fill="#06B6D4"/>
-    <circle cx="50" cy="50" r="8" fill="#3B82F6"/>
-    <circle cx="80" cy="50" r="8" fill="#0EA5E9"/>
-    <circle cx="35" cy="70" r="8" fill="#06B6D4"/>
-    <line x1="28" y1="20" x2="42" y2="20" stroke="#3B82F6" stroke-width="2"/>
-    <line x1="50" y1="28" x2="50" y2="42" stroke="#3B82F6" stroke-width="2"/>
-    <line x1="58" y1="50" x2="72" y2="50" stroke="#0EA5E9" stroke-width="2"/>
-    <line x1="47" y1="55" x2="38" y2="65" stroke="#06B6D4" stroke-width="2"/>
+  <!-- Subtle top accent line -->
+  <rect x="0" y="0" width="1200" height="2" fill="#333333"/>
+  
+  <!-- Left colored accent bar -->
+  <rect x="0" y="0" width="5" height="400" fill="#00d9ff"/>
+  
+  <!-- Main content container -->
+  <g transform="translate(80, 60)">
+    
+    <!-- Header section -->
+    <g>
+      <!-- Main title -->
+      <text x="0" y="72" class="title-main" fill="#ffffff">ORACLE</text>
+      <text x="285" y="72" class="title-accent" fill="#00d9ff">Sol</text>
+      
+      <!-- Descriptor with subtle styling -->
+      <text x="0" y="110" class="descriptor" fill="#b3b3b3">PROTEIN SOLUBILITY PREDICTION</text>
+      
+      <!-- Tagline -->
+      <text x="0" y="140" class="descriptor" fill="#808080">ESM2-650M Embeddings • MLP Architecture</text>
+    </g>
+    
+    <!-- Metrics grid -->
+    <g transform="translate(0, 180)">
+      
+      <!-- Metric 1: Accuracy -->
+      <g>
+        <text x="0" y="0" class="metric-label" fill="#808080">Accuracy</text>
+        <text x="0" y="28" class="metric-value" fill="#00d9ff">71.9%</text>
+        <line x1="0" y1="38" x2="80" y2="38" stroke="#2a2a2a" stroke-width="1"/>
+      </g>
+      
+      <!-- Metric 2: MCC -->
+      <g transform="translate(160, 0)">
+        <text x="0" y="0" class="metric-label" fill="#808080">Matthews CC</text>
+        <text x="0" y="28" class="metric-value" fill="#00d9ff">0.450</text>
+        <line x1="0" y1="38" x2="110" y2="38" stroke="#2a2a2a" stroke-width="1"/>
+      </g>
+      
+      <!-- Metric 3: Training Set -->
+      <g transform="translate(380, 0)">
+        <text x="0" y="0" class="metric-label" fill="#808080">Training Set</text>
+        <text x="0" y="28" class="metric-value" fill="#e5e5e5">70K Proteins</text>
+        <line x1="0" y1="38" x2="155" y2="38" stroke="#2a2a2a" stroke-width="1"/>
+      </g>
+      
+      <!-- Metric 4: Model Size -->
+      <g transform="translate(640, 0)">
+        <text x="0" y="0" class="metric-label" fill="#808080">Model Size</text>
+        <text x="0" y="28" class="metric-value" fill="#e5e5e5">2.8 MB</text>
+        <line x1="0" y1="38" x2="115" y2="38" stroke="#2a2a2a" stroke-width="1"/>
+      </g>
+      
+    </g>
+    
+    <!-- Divider -->
+    <line x1="0" y1="290" x2="850" y2="290" stroke="#2a2a2a" stroke-width="1"/>
+    
+    <!-- Footer section -->
+    <g transform="translate(0, 310)">
+      <text x="0" y="0" class="footer-text" fill="#808080">Version 0.6.0</text>
+      <text x="120" y="0" class="footer-text" fill="#808080">•</text>
+      <text x="140" y="0" class="footer-text" fill="#00d9ff">pip install oracle-sol</text>
+      <text x="350" y="0" class="footer-text" fill="#808080">•</text>
+      <text x="370" y="0" class="footer-text" fill="#00d9ff">github.com/asu/oracle-sol</text>
+    </g>
+    
   </g>
   
-  <!-- Molecule 2 - Top Right -->
-  <g opacity="0.15" transform="translate(1040, 80)">
-    <circle cx="60" cy="20" r="8" fill="#0EA5E9"/>
-    <circle cx="30" cy="50" r="8" fill="#3B82F6"/>
-    <circle cx="60" cy="60" r="8" fill="#06B6D4"/>
-    <circle cx="90" cy="50" r="8" fill="#0EA5E9"/>
-    <circle cx="60" cy="90" r="8" fill="#3B82F6"/>
-    <circle cx="20" cy="80" r="8" fill="#06B6D4"/>
-    <line x1="60" y1="28" x2="60" y2="52" stroke="#0EA5E9" stroke-width="2"/>
-    <line x1="38" y1="50" x2="52" y2="60" stroke="#3B82F6" stroke-width="2"/>
-    <line x1="68" y1="60" x2="82" y2="50" stroke="#06B6D4" stroke-width="2"/>
-    <line x1="60" y1="68" x2="60" y2="82" stroke="#0EA5E9" stroke-width="2"/>
-    <line x1="28" y1="80" x2="54" y2="87" stroke="#06B6D4" stroke-width="2"/>
-  </g>
-  
-  <!-- Molecule 3 - Bottom Left -->
-  <g opacity="0.18" transform="translate(300, 256)">
-    <circle cx="55" cy="20" r="8" fill="#06B6D4"/>
-    <circle cx="25" cy="45" r="8" fill="#0EA5E9"/>
-    <circle cx="55" cy="55" r="8" fill="#3B82F6"/>
-    <circle cx="85" cy="45" r="8" fill="#06B6D4"/>
-    <circle cx="40" cy="85" r="8" fill="#0EA5E9"/>
-    <circle cx="70" cy="85" r="8" fill="#3B82F6"/>
-    <line x1="55" y1="28" x2="55" y2="47" stroke="#06B6D4" stroke-width="2"/>
-    <line x1="33" y1="45" x2="47" y2="55" stroke="#0EA5E9" stroke-width="2"/>
-    <line x1="63" y1="55" x2="77" y2="45" stroke="#3B82F6" stroke-width="2"/>
-    <line x1="48" y1="60" x2="42" y2="77" stroke="#06B6D4" stroke-width="2"/>
-    <line x1="62" y1="60" x2="68" y2="77" stroke="#0EA5E9" stroke-width="2"/>
-  </g>
-  
-  <!-- Molecule 4 - Bottom Right -->
-  <g opacity="0.12" transform="translate(900, 224)">
-    <circle cx="65" cy="20" r="8" fill="#3B82F6"/>
-    <circle cx="35" cy="50" r="8" fill="#06B6D4"/>
-    <circle cx="65" cy="50" r="8" fill="#0EA5E9"/>
-    <circle cx="95" cy="50" r="8" fill="#3B82F6"/>
-    <circle cx="50" cy="80" r="8" fill="#06B6D4"/>
-    <circle cx="80" cy="80" r="8" fill="#0EA5E9"/>
-    <circle cx="65" cy="110" r="8" fill="#3B82F6"/>
-    <line x1="65" y1="28" x2="65" y2="42" stroke="#3B82F6" stroke-width="2"/>
-    <line x1="43" y1="50" x2="57" y2="50" stroke="#06B6D4" stroke-width="2"/>
-    <line x1="73" y1="50" x2="87" y2="50" stroke="#0EA5E9" stroke-width="2"/>
-    <line x1="42" y1="55" x2="52" y2="75" stroke="#06B6D4" stroke-width="2"/>
-    <line x1="88" y1="55" x2="78" y2="75" stroke="#0EA5E9" stroke-width="2"/>
-    <line x1="58" y1="85" x2="65" y2="102" stroke="#3B82F6" stroke-width="2"/>
-    <line x1="72" y1="85" x2="65" y2="102" stroke="#0EA5E9" stroke-width="2"/>
-  </g>
-  
-  <!-- Molecule 5 - Center -->
-  <g opacity="0.1" transform="translate(546, 100)">
-    <circle cx="50" cy="20" r="8" fill="#0EA5E9"/>
-    <circle cx="20" cy="50" r="8" fill="#3B82F6"/>
-    <circle cx="50" cy="50" r="8" fill="#06B6D4"/>
-    <circle cx="80" cy="50" r="8" fill="#0EA5E9"/>
-    <circle cx="50" cy="80" r="8" fill="#3B82F6"/>
-    <line x1="50" y1="28" x2="50" y2="42" stroke="#0EA5E9" stroke-width="2"/>
-    <line x1="28" y1="50" x2="42" y2="50" stroke="#3B82F6" stroke-width="2"/>
-    <line x1="58" y1="50" x2="72" y2="50" stroke="#06B6D4" stroke-width="2"/>
-    <line x1="50" y1="58" x2="50" y2="72" stroke="#0EA5E9" stroke-width="2"/>
-  </g>
-  
-  <!-- Semi-transparent overlay -->
-  <rect width="1200" height="400" fill="#000000" opacity="0.4"/>
-  
-  <!-- Icon -->
-  <defs>
-    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3B82F6"/>
-      <stop offset="100%" style="stop-color:#06B6D4"/>
-    </linearGradient>
-  </defs>
-  <rect x="335" y="128" width="64" height="64" rx="12" fill="url(#iconGradient)"/>
-  
-  <!-- Flask Icon -->
-  <g transform="translate(355, 145)">
-    <!-- Flask neck -->
-    <rect x="10" y="0" width="4" height="8" fill="white"/>
-    <!-- Flask body (beaker shape) -->
-    <path d="M 2 8 L 6 8 L 6 18 Q 6 22 8 24 L 16 24 Q 18 22 18 18 L 18 8 L 22 8 L 20 30 L 4 30 Z" fill="white"/>
-    <!-- Liquid inside -->
-    <ellipse cx="12" cy="24" rx="6" ry="2" fill="#06B6D4" opacity="0.6"/>
-    <!-- Bubbles -->
-    <circle cx="9" cy="20" r="1.5" fill="white" opacity="0.8"/>
-    <circle cx="15" cy="18" r="1" fill="white" opacity="0.8"/>
-    <circle cx="12" cy="15" r="1" fill="white" opacity="0.8"/>
-  </g>
-  
-  <!-- Title -->
-  <text x="420" y="180" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="white">
-    Oracle<tspan fill="#22D3EE">Sol</tspan>
-  </text>
-  
-  <!-- Subtitle -->
-  <text x="600" y="220" font-family="Arial, sans-serif" font-size="20" fill="#E5E7EB" text-anchor="middle">
-    AI-Powered Protein Solubility Prediction
-  </text>
-  
-  <!-- Description -->
-  <text x="600" y="250" font-family="Arial, sans-serif" font-size="16" fill="#9CA3AF" text-anchor="middle">
-    Predicting protein solubility with machine learning to accelerate research and drug discovery
-  </text>
-  
-  <!-- Feature Badges -->
-  <g transform="translate(270, 280)">
-    <rect x="0" y="0" width="140" height="36" rx="18" fill="#1E293B" opacity="0.6"/>
-    <rect x="0" y="0" width="140" height="36" rx="18" fill="none" stroke="#334155" stroke-opacity="0.5"/>
-    <text x="70" y="23" font-family="Arial, sans-serif" font-size="14" fill="#D1D5DB" text-anchor="middle">Deep Learning</text>
-  </g>
-  
-  <g transform="translate(425, 280)">
-    <rect x="0" y="0" width="150" height="36" rx="18" fill="#1E293B" opacity="0.6"/>
-    <rect x="0" y="0" width="150" height="36" rx="18" fill="none" stroke="#334155" stroke-opacity="0.5"/>
-    <text x="75" y="23" font-family="Arial, sans-serif" font-size="14" fill="#D1D5DB" text-anchor="middle">Fast Predictions</text>
-  </g>
-  
-  <g transform="translate(590, 280)">
-    <rect x="0" y="0" width="155" height="36" rx="18" fill="#1E293B" opacity="0.6"/>
-    <rect x="0" y="0" width="155" height="36" rx="18" fill="none" stroke="#334155" stroke-opacity="0.5"/>
-    <text x="77.5" y="23" font-family="Arial, sans-serif" font-size="14" fill="#D1D5DB" text-anchor="middle">Research-Ready</text>
-  </g>
-  
-  <g transform="translate(760, 280)">
-    <rect x="0" y="0" width="145" height="36" rx="18" fill="#1E293B" opacity="0.6"/>
-    <rect x="0" y="0" width="145" height="36" rx="18" fill="none" stroke="#334155" stroke-opacity="0.5"/>
-    <text x="72.5" y="23" font-family="Arial, sans-serif" font-size="14" fill="#D1D5DB" text-anchor="middle">High Accuracy</text>
-  </g>
-  
-  <!-- Bottom Accent Line -->
-  <defs>
-    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#3B82F6"/>
-      <stop offset="50%" style="stop-color:#22D3EE"/>
-      <stop offset="100%" style="stop-color:#14B8A6"/>
-    </linearGradient>
-  </defs>
-  <rect y="396" width="1200" height="4" fill="url(#accentGradient)"/>
 </svg>
