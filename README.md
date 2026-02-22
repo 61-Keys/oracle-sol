@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
   <!-- Background - Pure Black -->
   <rect width="1200" height="400" fill="#000000"/>
-  
+
   <!-- Subtle top accent line -->
   <rect x="0" y="0" width="1200" height="2" fill="#333333"/>
   
